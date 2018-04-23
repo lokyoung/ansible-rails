@@ -4,8 +4,9 @@ bind 'unix://{{ deploy_dir }}{{ deploy_app_name }}/shared/tmp/sockets/puma.sock'
 directory '{{ deploy_dir  }}{{ deploy_app_name }}/current'
 rackup "{{ deploy_dir  }}{{ deploy_app_name }}/current/config.ru"
 pidfile "{{ deploy_dir  }}{{ deploy_app_name }}/shared/tmp/pids/puma.pid"
-state_path "{{ deploy_dir  }}{{ deploy_app_name }}/shared/tmp/pids/puma.state"
+state_path "{{ deploy_dir  }}{{ deploy_app_name }}/shared/tmp/sockets/puma.state"
 stdout_redirect '{{ deploy_dir  }}{{ deploy_app_name }}/shared/log/puma_access.log', '{{ deploy_dir  }}{{ deploy_app_name }}/shared/log/puma_error.log', true
+activate_control_app 'unix://{{ deploy_dir }}{{ deploy_app_name }}/shared/tmp/sockets/pumactl.sock'
 
 environment 'production'
 threads {{ puma_threads }}
